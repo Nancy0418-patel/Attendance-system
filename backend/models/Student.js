@@ -31,12 +31,12 @@ const studentSchema = new mongoose.Schema({
   participationScore: { type: Number, default: 0 },
   batch:String,
   className: String,
-  oneSignalPlayerId: String, // For student's device
+  oneSignalPlayerId: String, // Removed as push notifications are no longer used
   parentContact: {
     name: String,
     email: String,
     phone: String,
-    oneSignalPlayerId: String, // For parent's device
+    // oneSignalPlayerId: String, // Removed as push notifications are no longer used
   },
 });
 

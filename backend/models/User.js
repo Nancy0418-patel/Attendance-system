@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     enum: ["student", "teacher", "parent", "admin"],
     default: "student",
   },
-  oneSignalPlayerId: String, // For user's (teacher/admin) device
+  // oneSignalPlayerId: String, // Removed as push notifications are no longer used
   // You can link to other models here if needed, e.g.,
   studentProfile: { type: mongoose.Schema.Types.ObjectId, ref: "Student" },
   teacherProfile: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher" },
