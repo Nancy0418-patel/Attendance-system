@@ -1,5 +1,5 @@
 const Leave = require("../models/Leave");
-const sendPushNotification = require("../utils/notificationService");
+// const sendPushNotification = require("../utils/notificationService");
 const sendEmail = require("../utils/emailService");
 const Student = require("../models/Student");
 
@@ -117,22 +117,22 @@ Attendance System`;
         }
 
         // Send push notification to student
-        if (student.oneSignalPlayerId) {
-          await sendPushNotification({
-            title: `Leave ${status}`,
-            message: `Your leave request for '${updatedLeave.reason}' has been ${status.toLowerCase()}.`,
-            player_ids: [student.oneSignalPlayerId]
-          });
-        }
+        // if (student.oneSignalPlayerId) {
+        //   await sendPushNotification({
+        //     title: `Leave ${status}`,
+        //     message: `Your leave request for '${updatedLeave.reason}' has been ${status.toLowerCase()}.`,
+        //     player_ids: [student.oneSignalPlayerId]
+        //   });
+        // }
 
         // Send push notification to parent
-        if (student.parentContact?.oneSignalPlayerId) {
-          await sendPushNotification({
-            title: `Student Leave ${status}`,
-            message: `Your child ${studentName}'s leave request for '${updatedLeave.reason}' has been ${status.toLowerCase()}.`,
-            player_ids: [student.parentContact.oneSignalPlayerId]
-          });
-        }
+        // if (student.parentContact?.oneSignalPlayerId) {
+        //   await sendPushNotification({
+        //     title: `Student Leave ${status}`,
+        //     message: `Your child ${studentName}'s leave request for '${updatedLeave.reason}' has been ${status.toLowerCase()}.`,
+        //     player_ids: [student.parentContact.oneSignalPlayerId]
+        //   });
+        // }
 
       } catch (emailError) {
         console.error('Error sending email notifications:', emailError);
@@ -144,13 +144,13 @@ Attendance System`;
     }
 
     // Send push notification to teacher (if teacher's player ID exists)
-    if (teacher.oneSignalPlayerId) {
-      await sendPushNotification({
-        title: `Leave ${status}`,
-        message: `You have ${status.toLowerCase()} a leave request for ${student ? student.firstName + ' ' + student.lastName : 'a student'}.`,
-        player_ids: [teacher.oneSignalPlayerId]
-      });
-    }
+    // if (teacher.oneSignalPlayerId) {
+    //   await sendPushNotification({
+    //     title: `Leave ${status}`,
+    //     message: `You have ${status.toLowerCase()} a leave request for ${student ? student.firstName + ' ' + student.lastName : 'a student'}.`,
+    //     player_ids: [teacher.oneSignalPlayerId]
+    //   });
+    // }
 
     console.log('=== Leave Status Update Completed ===');
     res.status(200).json({ updatedLeave, emailSendSuccess, emailErrorMessage });

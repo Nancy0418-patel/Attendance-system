@@ -1,5 +1,5 @@
 const Participation = require("../models/Participation");
-const sendPushNotification = require("../utils/notificationService");
+// const sendPushNotification = require("../utils/notificationService");
 const sendEmail = require("../utils/emailService");
 const Student = require("../models/Student");
 
@@ -27,22 +27,22 @@ exports.addParticipation = async (req, res) => {
     await participation.save();
 
     // Send push notification to student
-    if (student.oneSignalPlayerId) {
-      await sendPushNotification({
-        title: "Participation Recorded",
-        message: `Your participation in '${activity}' on ${new Date(date).toDateString()} has been recorded.`,
-        player_ids: [student.oneSignalPlayerId]
-      });
-    }
+    // if (student.oneSignalPlayerId) {
+    //   await sendPushNotification({
+    //     title: "Participation Recorded",
+    //     message: `Your participation in '${activity}' on ${new Date(date).toDateString()} has been recorded.`,
+    //     player_ids: [student.oneSignalPlayerId]
+    //   });
+    // }
 
     // Send push notification to parent
-    if (student.parentContact?.oneSignalPlayerId) {
-      await sendPushNotification({
-        title: "Student Participation Recorded",
-        message: `Your child ${student.firstName} ${student.lastName}'s participation in '${activity}' on ${new Date(date).toDateString()} has been recorded.`,
-        player_ids: [student.parentContact.oneSignalPlayerId]
-      });
-    }
+    // if (student.parentContact?.oneSignalPlayerId) {
+    //   await sendPushNotification({
+    //     title: "Student Participation Recorded",
+    //     message: `Your child ${student.firstName} ${student.lastName}'s participation in '${activity}' on ${new Date(date).toDateString()} has been recorded.`,
+    //     player_ids: [student.parentContact.oneSignalPlayerId]
+    //   });
+    // }
 
     res.status(201).json({ success: true, participation });
   } catch (err) {
