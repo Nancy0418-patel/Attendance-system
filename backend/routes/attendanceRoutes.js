@@ -6,4 +6,4 @@ const { markAttendance, getAttendanceByStudent } = require("../controllers/atten
 router.post("/", markAttendance);                        // POST /api/attendance
 router.get("/:studentId", getAttendanceByStudent);       // GET /api/attendance/:studentId
 
-module.exports = rou
+module.exports = router;
