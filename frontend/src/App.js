@@ -19,7 +19,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OneSignal from 'react-onesignal';
 import AttendanceAnalysis from './pages/AttendanceAnalysis';
-
+import API_BASE_URL from "../utils/api"; // adjust path as needed
+axios.get(`${API_BASE_URL}/api/something`)
 function App() {
   useEffect(() => {
     OneSignal.init({
