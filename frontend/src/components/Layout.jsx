@@ -24,6 +24,7 @@ import {
   AccountCircle as AccountCircleIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import BarChartIcon from '@mui/icons-material/BarChart'; // Add this import at the top
 
 const drawerWidth = 240;
 
@@ -77,6 +78,8 @@ function Layout() {
         { text: 'Attendance', icon: <EventNoteIcon />, path: '/teacher/attendance' },
         { text: 'Leave Approval', icon: <EventNoteIcon />, path: '/teacher/leave-approval' },
         { text: 'Notifications', icon: <NotificationsIcon />, path: '/teacher/notifications' },
+        { text: 'Attendance Analysis', icon: <BarChartIcon />, path: '/teacher/attendance-analysis' }, // NEW ITEM
+
       ];
     } else if (userRole === 'parent') {
       return [
@@ -90,6 +93,8 @@ function Layout() {
         { text: 'Attendance', icon: <EventNoteIcon />, path: '/admin/attendance' },
         { text: 'Leave Approval', icon: <EventNoteIcon />, path: '/admin/leave-approval' },
         { text: 'Notifications', icon: <NotificationsIcon />, path: '/admin/notifications' },
+        { text: 'Attendance Analysis', icon: <BarChartIcon />, path: '/admin/attendance-analysis' }, // NEW ITEM
+
       ];
     }
     return [];
