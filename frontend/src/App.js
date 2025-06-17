@@ -18,6 +18,7 @@ import PrivateRoute from './components/PrivateRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OneSignal from 'react-onesignal';
+import AttendanceAnalysis from './pages/AttendanceAnalysis';
 
 function App() {
   useEffect(() => {
@@ -91,6 +92,7 @@ function App() {
           <Route path="participation" element={<Layout><ParticipationPage /></Layout>} />
           <Route path="notifications" element={<Layout><Notifications /></Layout>} />
           <Route path="timetable" element={<Layout><TimetableManagementPage /></Layout>} />
+          <Route path="/attendance-analysis" element={<AttendanceAnalysis />} />
         </Route>
 
         <Route path="/student" element={<PrivateRoute requiredRole="student" />}>

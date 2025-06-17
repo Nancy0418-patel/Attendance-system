@@ -23,6 +23,7 @@ import StudentDashboardPage from './pages/StudentDashboardPage'; // This will be
 import OneSignalInitializer from './OneSignalInitializer';
 import TimetableManagementPage from './pages/TimetableManagementPage';
 import Attendance from './pages/Attendance'; // Attendance marking for teachers
+import AttendanceAnalysis from './pages/AttendanceAnalysis';
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             <Route path="students" element={<Students />} />
             <Route path="teacher-dashboard" element={<Dashboard />} />
             <Route path="notifications" element={<Notifications />} />
+            <Route path="attendance-analysis" element={<AttendanceAnalysis />} />
           </Route>
 
           {/* Protected Routes for parents */}
