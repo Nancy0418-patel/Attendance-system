@@ -21,7 +21,26 @@ const emailRoutes = require("./routes/emailRoutes");
 const attendanceAnalysisRoutes = require("./routes/attendanceAnalysisRoutes");
 
 const app = express();
-app.use(cors());
+
+// CORS configuration
+const allowedOrigins = [
+  'http://localhost:3000', // Your local frontend
+  'https://attendance-system-frontend1.onrender.com' // Your deployed frontend
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/", (req, res) => {
