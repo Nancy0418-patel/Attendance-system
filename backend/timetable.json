@@ -1,0 +1,464 @@
+[
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": null,
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": [
+      "Chintal Raval"
+    ],
+    "startTime": "09:10",
+    "endTime": "10:10"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": null,
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Rajesh Patel"
+    ],
+    "startTime": "10:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": null,
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+      "Akash Patel"
+    ],
+    "startTime": "12:10",
+    "endTime": "13:10"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": null,
+    "subject": "MA262",
+    "subjectName": "Statistical and Numerical Techniques",
+    "faculty": [
+      "Yogeswari Patel"
+    ],
+    "startTime": "13:10",
+    "endTime": "14:10"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": "A",
+    "subject": "IT264",
+    "subjectName": "Full Stack Web Development (Lab)",
+    "faculty": [
+      "Ashish Katira",
+      "Ritika Jani"
+    ],
+    "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": "B",
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": [
+      "Chintal Raval"
+    ],
+     "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": "C",
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+      "Shital Sharma",
+      "Akash Patel"
+    ],
+     "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Monday",
+    "batch": "D",
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Pooja Singh Chaudhary"
+    ],
+      "startTime": "14:20",
+    "endTime": "16:20"
+  },  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": "A",
+    "subject": "MA262",
+    "subjectName": "Statistical and Numerical Techniques",
+    "faculty": [
+      "Hardik Jeshwal"
+    ],
+    "startTime": "09:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": "B",
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+      "Shital Sharma",
+      "Akash Patel"
+    ],
+    "startTime": "09:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": "C",
+    "subject": "MA262",
+    "subjectName": "Statistical and Numerical Techniques",
+    "faculty": [
+      "Hardik Jeshwal"
+    ],
+    "startTime": "09:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": "D",
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": [
+      "Hitesh Makwana"
+    ],
+    "startTime": "09:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": null,
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": [
+      "Chintal Raval"
+    ],
+    "startTime": "12:10",
+    "endTime": "13:10"
+  },
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": null,
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Rajesh Patel"
+    ],
+    "startTime": "13:10",
+    "endTime": "14:10"
+  },
+
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": null,
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+      "Akash Patel"
+    ],
+    "startTime": "14:20",
+    "endTime": "15:20"
+  },
+  {
+    "className": "IT",
+    "day": "Tuesday",
+    "batch": null,
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Rajesh Patel"
+    ],
+     "startTime": "15:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": null,
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": [
+      "Chintal Raval"
+    ],
+    "startTime": "09:10",
+    "endTime": "10:10"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": null,
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+      "Akash Patel"
+    ],
+    "startTime": "10:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": null,
+    "subject": "IT264",
+    "subjectName": "Full Stack Web Development",
+    "faculty": [
+      "Dip Patel"
+    ],
+    "startTime": "12:10",
+    "endTime": "14:10"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": "A",
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+      "Shital Sharma"
+    ],
+      "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": "B",
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Rajesh Patel"
+    ],
+   "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": "C",
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Pooja Singh Chaudhary"
+    ],
+     "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Wednesday",
+    "batch": "D",
+    "subject": "IT264",
+    "subjectName": "Full Stack Web Development",
+    "faculty": [
+      "Ritika Jani"
+    ],
+     "startTime": "14:20",
+    "endTime": "16:20"
+  },
+{
+    "className": "IT",
+    "day": "Thursday",
+    "batch": "null",
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+    "faculty": [
+      "Rajesh Patel"
+    ],
+    "startTime": "09:10",
+    "endTime": "10:10"
+  },  
+{
+"className": "IT",
+    "day": "Thursday",
+    "batch":"null",
+    "subject": "MA262",
+    "subjectName": "Statistical and Numerical Techniques",
+    "faculty": [
+      "DR. Vyomesh Nandurbarkar"
+    ],
+    "startTime": "10:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Thursday",
+    "batch": "A",
+    "subject": "IT263",
+    "subjectName": "Computer Architecture and Microprocessor Interfacing",
+"faculty":[
+      "Pooja Singh Chaudhary"
+    ],
+    "startTime": "12:10",
+    "endTime": "14:10"
+  },
+  {
+    "className": "IT",
+    "day": "Thursday",
+    "batch": "B",
+    "subject": "MA262",
+    "subjectName": "Statistical and Numerical Techniques",
+    "faculty": [
+"Hardik Jeshwal"    ],
+    "startTime": "12:10",
+    "endTime": "14:10"
+  },
+  {
+    "className": "IT",
+    "day": "Thursday",
+    "batch": "C",
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": [
+"Chintal Raval"
+   ],
+    "startTime": "12:10",
+    "endTime": "14:10"
+  },
+  {
+    "className": "IT",
+    "day": "Thursday",
+    "batch": "D",
+    "subject": "IT261",
+    "subjectName": "Computer Networks",
+    "faculty": [
+"Shital Sharma"
+],
+    "startTime": "12:10",
+    "endTime": "14:10"
+  },
+  {
+  "className": "IT",
+  "day": "Thursday",
+  "batch": "A",
+  "subject": "IT265",
+  "subjectName": "Design and Analysis of Algorithms",
+  "faculty": ["Chintal Raval"],
+    "startTime": "14:20",
+    "endTime": "16:20"
+},
+{
+  "className": "IT",
+  "day": "Thursday",
+  "batch": "B",
+  "subject": "IT264",
+  "subjectName": "Full Stack Web Development",
+  "faculty": ["Sachin Patel"],
+    "startTime": "14:20",
+    "endTime": "16:20"
+},
+{
+  "className": "IT",
+  "day": "Thursday",
+  "batch": "C",
+  "subject": "IT264",
+  "subjectName": "Full Stack Web Development",
+  "faculty": ["Ritika Jani"],
+    "startTime": "14:20",
+    "endTime": "16:20"
+},
+{
+  "className": "IT",
+  "day": "Thursday",
+  "batch": "D",
+  "subject": "MA262",
+  "subjectName": "Statistical and Numerical Techniques",
+  "faculty": ["Hardik Jeshwal"],
+    "startTime": "14:20",
+    "endTime": "16:20"
+},
+
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": null,
+    "subject": "IT265",
+    "subjectName": "Design and Analysis of Algorithms",
+    "faculty": ["Chintal Raval"],
+    "startTime": "09:10",
+    "endTime": "10:10"
+  },
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": null,
+    "subject": "MA262",
+    "subjectName": "Statistical and Numerical Techniques",
+    "faculty": ["Vyomesh Nandurbarkar"],
+    "startTime": "10:10",
+    "endTime": "11:10"
+  },
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": null,
+    "subject": "HS111.03",
+    "subjectName": "Human Values and Ethics",
+    "faculty": ["Celin Davala"],
+    "startTime": "12:10",
+    "endTime": "14:10"
+  },
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": "A",
+    "subject": "IT266",
+    "subjectName":" Project-I",
+
+    "faculty": ["Ankit Patel", "Amit Nayak"],
+  "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": "B",
+    "subject": "IT266",
+    "subjectName":" Project-I",
+    "faculty": ["Ankit Patel", "Amit Nayak"],
+  "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": "C",
+    "subject": "IT266",
+    "subjectName":" Project-I",
+    "faculty": ["Ritika Jani"],
+     "startTime": "14:20",
+    "endTime": "16:20"
+  },
+  {
+    "className": "IT",
+    "day": "Friday",
+    "batch": "D",
+    "subject": "IT266",
+     "subjectName":" Project-I",
+    "faculty": ["Ritika Jani"],
+    "startTime": "14:20",
+    "endTime": "16:20"
+  }
+]
