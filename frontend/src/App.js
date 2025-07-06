@@ -21,8 +21,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import OneSignal from 'react-onesignal';
 import AttendanceAnalysis from './pages/AttendanceAnalysis';
-import API_BASE_URL from './utils/api';
-
 function App() {
   useEffect(() => {
     OneSignal.init({
@@ -60,7 +58,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/users/update-player-id`, {
+      const response = await fetch('http://localhost:5000/api/users/update-player-id', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +93,7 @@ function App() {
           <Route path="participation" element={<Layout><ParticipationPage /></Layout>} />
           <Route path="notifications" element={<Layout><Notifications /></Layout>} />
           <Route path="timetable" element={<Layout><TimetableManagementPage /></Layout>} />
-          <Route path="/attendance-analysis" element={<AttendanceAnalysis />} />
+          <Route path="attendance-analysis" element={<AttendanceAnalysis />} />
         </Route>
 
         <Route path="/student" element={<PrivateRoute requiredRole="student" />}>

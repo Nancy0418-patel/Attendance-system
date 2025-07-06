@@ -23,7 +23,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
-import API_BASE_URL from '../utils/api';
 
 function Attendance() {
   const [classes, setClasses] = useState([]);
@@ -78,8 +77,7 @@ function Attendance() {
 
   const fetchClasses = async () => {
     try {
-      // const response = await fetch('http://localhost:5000/api/classes');
-      const response = await fetch(`${API_BASE_URL}/api/classes`);
+      const response = await fetch('http://localhost:5000/api/classes');
       const data = await response.json();
       if (response.ok) {
         setClasses(data);
@@ -94,8 +92,7 @@ function Attendance() {
   const fetchStudents = async (batch = '') => {
     try {
       setLoading(true);
-      // let url = `http://localhost:5000/api/classes/${selectedClass}/students`;
-      let url = `${API_BASE_URL}/api/classes/${selectedClass}/students`;
+      let url = `http://localhost:5000/api/classes/${selectedClass}/students`;
       if (batch !== null && batch !== undefined && batch !== '') {
         url += `?batch=${batch}`;
       } else if (batch === '') {
@@ -138,8 +135,7 @@ function Attendance() {
       const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' });
       console.log('Sending timetable request for class:', className, 'and day:', dayOfWeek);
       
-      // const response = await fetch(`http://localhost:5000/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
-      const response = await fetch(`${API_BASE_URL}/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
+      const response = await fetch(`http://localhost:5000/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
       if (!response.ok) {
         throw new Error(`Failed to fetch timetable: ${response.status}`);
       }
@@ -179,7 +175,7 @@ function Attendance() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/attendance`, {
+      const response = await fetch(`http://localhost:5000/api/attendance`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

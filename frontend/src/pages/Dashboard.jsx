@@ -10,7 +10,6 @@ import {
   Divider,
 } from '@mui/material';
 import { EventNote as EventNoteIcon, Notifications as NotificationsIcon } from '@mui/icons-material';
-import API_BASE_URL from '../utils/api';
 
 function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -40,8 +39,7 @@ function Dashboard() {
           const dayOfWeek = today.toLocaleString('en-US', { weekday: 'long' });
 
           // Fetch Today's Lecture Schedule
-          // const timetableResponse = await fetch(`http://localhost:5000/api/timetable/teacher/${teacherId}/${dayOfWeek}`, {
-          const timetableResponse = await fetch(`${API_BASE_URL}/api/timetable/teacher/${teacherId}/${dayOfWeek}`, {
+          const timetableResponse = await fetch(`http://localhost:5000/api/timetable/teacher/${teacherId}/${dayOfWeek}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
@@ -57,9 +55,7 @@ function Dashboard() {
           }
 
           // Fetch Today's Activity (Notifications for now)
-          // const notificationsResponse = await fetch(`http://localhost:5000/api/notifications/user/${teacherId}`, {
-            const notificationsResponse = await fetch(`${API_BASE_URL}/api/notifications/user/${teacherId}`, {
-
+          const notificationsResponse = await fetch(`http://localhost:5000/api/notifications/user/${teacherId}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
