@@ -24,7 +24,6 @@ import {
 } from '@mui/icons-material';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { toast } from 'react-toastify';
-import API_BASE_URL from '../utils/api';
 
 const StudentDashboardPage = () => {
   const [studentData, setStudentData] = useState(null);
@@ -39,16 +38,25 @@ const StudentDashboardPage = () => {
       console.log('Attempting to fetch student data for dashboard...');
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('/api/students/profile', {
+        const response = await fetch('https://attendence-system-backend.onrender.com/api/students/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        const studentProfileData = await response.json();
 
         if (!response.ok) {
-          throw new Error(studentProfileData.message || 'Failed to fetch student data');
+          let errorMessage = 'Failed to fetch student data';
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorMessage;
+          } catch (jsonError) {
+            // If response is not JSON, use status text
+            errorMessage = response.statusText || errorMessage;
+          }
+          throw new Error(errorMessage);
         }
+
+        const studentProfileData = await response.json();
 
         setStudentData(studentProfileData);
 
@@ -57,7 +65,7 @@ const StudentDashboardPage = () => {
           const dayOfWeek = new Date().toLocaleString('en-US', { weekday: 'long' });
           
           // Fetch timetable entries
-          const timetableResponse = await fetch(`${API_BASE_URL}/api/timetable/${encodeURIComponent(studentProfileData.classId.className)}/${dayOfWeek}`);
+          const timetableResponse = await fetch(`https://attendence-system-backend.onrender.com/api/timetable/${encodeURIComponent(studentProfileData.classId.className)}/${dayOfWeek}`);
           
           if (!timetableResponse.ok) {
             // If timetable not found (e.g., no classes on Saturday), set empty array, don't throw global error
@@ -65,7 +73,14 @@ const StudentDashboardPage = () => {
               console.warn(`No timetable entries found for ${dayOfWeek}.`);
               setDailyTimetable([]);
             } else {
-              throw new Error(timetableData.message || 'Failed to fetch timetable');
+              let errorMessage = 'Failed to fetch timetable';
+              try {
+                const timetableData = await timetableResponse.json();
+                errorMessage = timetableData.message || errorMessage;
+              } catch (jsonError) {
+                errorMessage = timetableResponse.statusText || errorMessage;
+              }
+              throw new Error(errorMessage);
             }
           } else {
             const timetableData = await timetableResponse.json();
@@ -77,12 +92,11 @@ const StudentDashboardPage = () => {
           }
 
           // Fetch attendance records for the student for today
-          const attendanceResponse = await fetch(`${API_BASE_URL}/api/attendance/${studentProfileData.userId}`, {
+          const attendanceResponse = await fetch(`https://attendence-system-backend.onrender.com/api/attendance/${studentProfileData.userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          const attendanceRecordsData = await attendanceResponse.json();
 
           if (!attendanceResponse.ok) {
             // If no attendance records found for today, set empty array, don't throw global error
@@ -90,9 +104,17 @@ const StudentDashboardPage = () => {
                 console.warn(`No attendance records found for today for student ${studentProfileData.userId}.`);
                 setTodaysAttendanceRecords([]);
             } else {
-                throw new Error(attendanceRecordsData.message || 'Failed to fetch attendance records');
+                let errorMessage = 'Failed to fetch attendance records';
+                try {
+                  const attendanceRecordsData = await attendanceResponse.json();
+                  errorMessage = attendanceRecordsData.message || errorMessage;
+                } catch (jsonError) {
+                  errorMessage = attendanceResponse.statusText || errorMessage;
+                }
+                throw new Error(errorMessage);
             }
           } else {
+            const attendanceRecordsData = await attendanceResponse.json();
             // Filter attendance records for today
             const today = new Date();
             const todaysDateString = today.toISOString().split('T')[0];

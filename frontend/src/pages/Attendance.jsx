@@ -77,13 +77,22 @@ function Attendance() {
 
   const fetchClasses = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/classes');
-      const data = await response.json();
-      if (response.ok) {
-        setClasses(data);
-      } else {
-        setError(data.message);
+      const response = await fetch('https://attendence-system-backend.onrender.com/api/classes');
+      
+      if (!response.ok) {
+        let errorMessage = 'Failed to fetch classes';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (jsonError) {
+          errorMessage = response.statusText || errorMessage;
+        }
+        setError(errorMessage);
+        return;
       }
+      
+      const data = await response.json();
+      setClasses(data);
     } catch (error) {
       setError('Failed to fetch classes');
     }
@@ -92,7 +101,7 @@ function Attendance() {
   const fetchStudents = async (batch = '') => {
     try {
       setLoading(true);
-      let url = `http://localhost:5000/api/classes/${selectedClass}/students`;
+      let url = `https://attendence-system-backend.onrender.com/api/classes/${selectedClass}/students`;
       if (batch !== null && batch !== undefined && batch !== '') {
         url += `?batch=${batch}`;
       } else if (batch === '') {
@@ -101,6 +110,19 @@ function Attendance() {
       
       console.log('Fetching students from:', url);
       const response = await fetch(url);
+      
+      if (!response.ok) {
+        let errorMessage = 'Failed to fetch students';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (jsonError) {
+          errorMessage = response.statusText || errorMessage;
+        }
+        setError(errorMessage);
+        return;
+      }
+      
       const data = await response.json();
       console.log('Students data:', data);
 
@@ -135,9 +157,16 @@ function Attendance() {
       const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' });
       console.log('Sending timetable request for class:', className, 'and day:', dayOfWeek);
       
-      const response = await fetch(`http://localhost:5000/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
+      const response = await fetch(`https://attendence-system-backend.onrender.com/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch timetable: ${response.status}`);
+        let errorMessage = `Failed to fetch timetable: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (jsonError) {
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
       
       const data = await response.json();
@@ -175,7 +204,7 @@ function Attendance() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/attendance`, {
+      const response = await fetch(`https://attendence-system-backend.onrender.com/api/attendance`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -192,19 +221,26 @@ function Attendance() {
         }),
       });
 
-      const data = await response.json();
+      if (!response.ok) {
+        let errorMessage = 'Failed to save attendance';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (jsonError) {
+          errorMessage = response.statusText || errorMessage;
+        }
+        setError(errorMessage);
+        return;
+      }
 
-      if (response.ok) {
-        setError('');
-        setSuccessMessage('Attendance saved successfully!');
-        setStudents([]);
-        setFilteredStudents([]);
+      const data = await response.json();
+      setError('');
+      setSuccessMessage('Attendance saved successfully!');
+      setStudents([]);
+      setFilteredStudents([]);
         setAttendance({});
         setSelectedTimetableEntryId('');
         setSelectedTimetableEntry(null);
-      } else {
-        throw new Error(data.message || 'Failed to save attendance');
-      }
     } catch (error) {
       setError('Failed to save attendance: ' + error.message);
       setSuccessMessage('');

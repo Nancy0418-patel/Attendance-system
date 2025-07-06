@@ -39,7 +39,7 @@ function Dashboard() {
           const dayOfWeek = today.toLocaleString('en-US', { weekday: 'long' });
 
           // Fetch Today's Lecture Schedule
-          const timetableResponse = await fetch(`http://localhost:5000/api/timetable/teacher/${teacherId}/${dayOfWeek}`, {
+          const timetableResponse = await fetch(`https://attendence-system-backend.onrender.com/api/timetable/teacher/${teacherId}/${dayOfWeek}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
@@ -50,12 +50,18 @@ function Dashboard() {
           } else if (timetableResponse.status === 404) {
             setTodayLectures([]); // No timetable for today
           } else {
-            const errorData = await timetableResponse.json();
-            throw new Error(errorData.message || 'Failed to fetch timetable');
+            let errorMessage = 'Failed to fetch timetable';
+            try {
+              const errorData = await timetableResponse.json();
+              errorMessage = errorData.message || errorMessage;
+            } catch (jsonError) {
+              errorMessage = timetableResponse.statusText || errorMessage;
+            }
+            throw new Error(errorMessage);
           }
 
           // Fetch Today's Activity (Notifications for now)
-          const notificationsResponse = await fetch(`http://localhost:5000/api/notifications/user/${teacherId}`, {
+          const notificationsResponse = await fetch(`https://attendence-system-backend.onrender.com/api/notifications/user/${teacherId}`, {
             headers: {
               'Authorization': `Bearer ${token}`,
             },
@@ -77,8 +83,14 @@ function Dashboard() {
           } else if (notificationsResponse.status === 404) {
              setTodayActivity([]); // No notifications for today
           }else {
-            const errorData = await notificationsResponse.json();
-            console.error('Error fetching notifications:', errorData);
+            let errorMessage = 'Failed to fetch notifications';
+            try {
+              const errorData = await notificationsResponse.json();
+              errorMessage = errorData.message || errorMessage;
+            } catch (jsonError) {
+              errorMessage = notificationsResponse.statusText || errorMessage;
+            }
+            console.error('Error fetching notifications:', errorMessage);
             // Even if notifications fail, don't block timetable display
           }
 
