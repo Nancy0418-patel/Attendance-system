@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { apiPost } from '../utils/apiHelper';
 
 function Login() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function Login() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange =  (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -44,6 +45,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+  setLoading(true);
 
     let valid = true;
     if (!formData.email) {
@@ -60,28 +62,20 @@ function Login() {
     }
 
     try {
-      // const response = await fetch('http://localhost:5000/api/auth/login', {
-        const response = await fetch(`https://attendance-system-backend-fyqk.onrender.com/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        let errorMessage = 'Login failed';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (jsonError) {
-          errorMessage = response.statusText || errorMessage;
-        }
-        throw new Error(errorMessage);
+      const { data, error } = await apiPost('/api/auth/login', formData);
+      
+      if (error) {
+      if (error.includes('401')) {
+        setError('Invalid email or password. Please try again.');
+      } else if (error.includes('Network error')) {
+        setError('Cannot connect to the server. Please try again later.');
+      } else {
+        setError(error);
       }
-
-      const data = await response.json();
-
+      setLoading(false);
+      return;
+    }
+    
       localStorage.setItem('token', data.token);
       localStorage.setItem('userRole', data.role);
       localStorage.setItem('userId', data._id);
@@ -101,8 +95,10 @@ function Login() {
         navigate('/');
       }
     } catch (err) {
-      setError(err.message);
+      setError('An unexpected error occurred. Please try again.');
     }
+    setLoading(false);
+  
   };
 
   return (
@@ -227,4 +223,4 @@ function Login() {
   );
 }
 
-export default Login; 
+export default Login;
