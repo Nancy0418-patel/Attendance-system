@@ -21,7 +21,7 @@ const emailRoutes = require("./routes/emailRoutes");
 const attendanceAnalysisRoutes = require("./routes/attendanceAnalysisRoutes");
 
 const app = express();
-
+app.use(cors());
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:3000', // Your local frontend
