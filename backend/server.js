@@ -21,26 +21,45 @@ const emailRoutes = require("./routes/emailRoutes");
 const attendanceAnalysisRoutes = require("./routes/attendanceAnalysisRoutes");
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 // CORS configuration
+// const allowedOrigins = [
+//   'http://localhost:3001'
+//   // ,'https://attendance-system-frontend1.onrender.com' // your production frontend
+// ];
+// app.use(cors({
+//   origin: allowedOrigins,
+//   credentials: true
+// }));
+// app.use(express.json());
 const allowedOrigins = [
-  'http://localhost:3000', // Your local frontend
-  'https://attendance-system-frontend1.onrender.com' // Your deployed frontend
+  'http://localhost:3000'
 ];
 
-const corsOptions = {
+app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) === -1) {
       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
     return callback(null, true);
-  }
-};
+  },
+  credentials: true,
+}));
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     // allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   }
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -50,8 +69,8 @@ app.get("/", (req, res) => {
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("MongoDB connected");
-    app.listen(5000, () => console.log("Server running on port 5000"));
-  })
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));  })
   .catch(err => console.error(err));
 
 app.use("/api/attendance", attendanceRoutes);
