@@ -23,6 +23,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Check as CheckIcon, Close as CloseIcon } from '@mui/icons-material';
+import { apiGet, apiPost } from '../utils/apiHelper';
 
 function Attendance() {
   const [classes, setClasses] = useState([]);
@@ -76,32 +77,19 @@ function Attendance() {
   }, [selectedTimetableEntryId, timetableEntries, selectedClass]);
 
   const fetchClasses = async () => {
-    try {
-      const response = await fetch('https://attendence-system-backend.onrender.com/api/classes');
-      
-      if (!response.ok) {
-        let errorMessage = 'Failed to fetch classes';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (jsonError) {
-          errorMessage = response.statusText || errorMessage;
-        }
-        setError(errorMessage);
-        return;
-      }
-      
-      const data = await response.json();
+    const { data, error } = await apiGet('/api/classes');
+    
+    if (error) {
+      setError(error);
+    } else {
       setClasses(data);
-    } catch (error) {
-      setError('Failed to fetch classes');
     }
   };
 
   const fetchStudents = async (batch = '') => {
     try {
       setLoading(true);
-      let url = `https://attendence-system-backend.onrender.com/api/classes/${selectedClass}/students`;
+      let url = `/api/classes/${selectedClass}/students`;
       if (batch !== null && batch !== undefined && batch !== '') {
         url += `?batch=${batch}`;
       } else if (batch === '') {
@@ -109,36 +97,23 @@ function Attendance() {
       }
       
       console.log('Fetching students from:', url);
-      const response = await fetch(url);
+      const { data, error } = await apiGet(url);
       
-      if (!response.ok) {
-        let errorMessage = 'Failed to fetch students';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (jsonError) {
-          errorMessage = response.statusText || errorMessage;
-        }
-        setError(errorMessage);
+      if (error) {
+        setError(error);
+        setStudents([]);
+        setFilteredStudents([]);
         return;
       }
       
-      const data = await response.json();
       console.log('Students data:', data);
-
-      if (response.ok) {
-        setStudents(data);
-        setFilteredStudents(data);
-        const initialAttendance = {};
-        data.forEach(student => {
-          initialAttendance[student._id] = 'Present';
-        });
-        setAttendance(initialAttendance);
-      } else {
-        setError(data.message);
-        setStudents([]);
-        setFilteredStudents([]);
-      }
+      setStudents(data);
+      setFilteredStudents(data);
+      const initialAttendance = {};
+      data.forEach(student => {
+        initialAttendance[student._id] = 'Present';
+      });
+      setAttendance(initialAttendance);
     } catch (error) {
       console.error('Error fetching students:', error);
       setError('Failed to fetch students');
@@ -157,19 +132,16 @@ function Attendance() {
       const dayOfWeek = selectedDate.toLocaleString('en-US', { weekday: 'long' });
       console.log('Sending timetable request for class:', className, 'and day:', dayOfWeek);
       
-      const response = await fetch(`https://attendence-system-backend.onrender.com/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
-      if (!response.ok) {
-        let errorMessage = `Failed to fetch timetable: ${response.status}`;
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (jsonError) {
-          errorMessage = response.statusText || errorMessage;
-        }
-        throw new Error(errorMessage);
+      const { data, error } = await apiGet(`/api/timetable/${encodeURIComponent(className)}/${dayOfWeek}`);
+      
+      if (error) {
+        setError('Failed to fetch timetable entries: ' + error);
+        setTimetableEntries([]);
+        setSelectedTimetableEntryId('');
+        setSelectedTimetableEntry(null);
+        return;
       }
       
-      const data = await response.json();
       console.log('Timetable data received:', data);
 
       if (data.length > 0) {
@@ -203,47 +175,30 @@ function Attendance() {
       return;
     }
 
-    try {
-      const response = await fetch(`https://attendence-system-backend.onrender.com/api/attendance`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          classId: selectedClass,
-          date: selectedDate.toISOString(),
-          subject: selectedTimetableEntry.subject,
-          timeSlot: `${selectedTimetableEntry.startTime}-${selectedTimetableEntry.endTime}`,
-          attendance: Object.entries(attendance).map(([studentId, status]) => ({
-            studentId,
-            status
-          }))
-        }),
-      });
+    const requestData = {
+      classId: selectedClass,
+      date: selectedDate.toISOString(),
+      subject: selectedTimetableEntry.subject,
+      timeSlot: `${selectedTimetableEntry.startTime}-${selectedTimetableEntry.endTime}`,
+      attendance: Object.entries(attendance).map(([studentId, status]) => ({
+        studentId,
+        status
+      }))
+    };
 
-      if (!response.ok) {
-        let errorMessage = 'Failed to save attendance';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (jsonError) {
-          errorMessage = response.statusText || errorMessage;
-        }
-        setError(errorMessage);
-        return;
-      }
-
-      const data = await response.json();
+    const { data, error } = await apiPost('/api/attendance', requestData);
+    
+    if (error) {
+      setError(error);
+      setSuccessMessage('');
+    } else {
       setError('');
       setSuccessMessage('Attendance saved successfully!');
       setStudents([]);
       setFilteredStudents([]);
-        setAttendance({});
-        setSelectedTimetableEntryId('');
-        setSelectedTimetableEntry(null);
-    } catch (error) {
-      setError('Failed to save attendance: ' + error.message);
-      setSuccessMessage('');
+      setAttendance({});
+      setSelectedTimetableEntryId('');
+      setSelectedTimetableEntry(null);
     }
   };
 

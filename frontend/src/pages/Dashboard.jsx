@@ -10,6 +10,7 @@ import {
   Divider,
 } from '@mui/material';
 import { EventNote as EventNoteIcon, Notifications as NotificationsIcon } from '@mui/icons-material';
+import { apiGet, getAuthHeader } from '../utils/apiHelper';
 
 function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -34,41 +35,33 @@ function Dashboard() {
         setLoading(true);
         setError('');
         try {
-          const token = localStorage.getItem('token');
           const today = new Date();
           const dayOfWeek = today.toLocaleString('en-US', { weekday: 'long' });
 
           // Fetch Today's Lecture Schedule
-          const timetableResponse = await fetch(`https://attendence-system-backend.onrender.com/api/timetable/teacher/${teacherId}/${dayOfWeek}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
-          if (timetableResponse.ok) {
-            const timetableData = await timetableResponse.json();
-            setTodayLectures(timetableData);
-          } else if (timetableResponse.status === 404) {
-            setTodayLectures([]); // No timetable for today
-          } else {
-            let errorMessage = 'Failed to fetch timetable';
-            try {
-              const errorData = await timetableResponse.json();
-              errorMessage = errorData.message || errorMessage;
-            } catch (jsonError) {
-              errorMessage = timetableResponse.statusText || errorMessage;
+          const { data: timetableData, error: timetableError } = await apiGet(`/api/timetable/teacher/${teacherId}/${dayOfWeek}`, getAuthHeader());
+          
+          if (timetableError) {
+            if (timetableError.includes('404')) {
+              setTodayLectures([]); // No timetable for today
+            } else {
+              throw new Error(timetableError);
             }
-            throw new Error(errorMessage);
+          } else {
+            setTodayLectures(timetableData);
           }
 
           // Fetch Today's Activity (Notifications for now)
-          const notificationsResponse = await fetch(`https://attendence-system-backend.onrender.com/api/notifications/user/${teacherId}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
+          const { data: notificationsData, error: notificationsError } = await apiGet(`/api/notifications/user/${teacherId}`, getAuthHeader());
 
-          if (notificationsResponse.ok) {
-            const notificationsData = await notificationsResponse.json();
+          if (notificationsError) {
+            if (notificationsError.includes('404')) {
+              setTodayActivity([]); // No notifications for today
+            } else {
+              console.error('Error fetching notifications:', notificationsError);
+              // Even if notifications fail, don't block timetable display
+            }
+          } else {
             // Filter notifications for today
             const startOfDay = new Date();
             startOfDay.setHours(0, 0, 0, 0);
@@ -80,18 +73,6 @@ function Dashboard() {
               return notificationDate >= startOfDay && notificationDate <= endOfDay;
             });
             setTodayActivity(filteredNotifications);
-          } else if (notificationsResponse.status === 404) {
-             setTodayActivity([]); // No notifications for today
-          }else {
-            let errorMessage = 'Failed to fetch notifications';
-            try {
-              const errorData = await notificationsResponse.json();
-              errorMessage = errorData.message || errorMessage;
-            } catch (jsonError) {
-              errorMessage = notificationsResponse.statusText || errorMessage;
-            }
-            console.error('Error fetching notifications:', errorMessage);
-            // Even if notifications fail, don't block timetable display
           }
 
         } catch (err) {
@@ -181,4 +162,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard; 
+export default Dashboard;
