@@ -33,7 +33,8 @@ const app = express();
 // }));
 // app.use(express.json());
 const allowedOrigins = [
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'https://attendance-system-frontend1.onrender.com'
 ];
 
 app.use(cors({
