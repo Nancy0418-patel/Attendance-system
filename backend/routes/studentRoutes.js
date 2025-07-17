@@ -10,7 +10,7 @@ router.get("/", getAllStudents);    // Get all students
 router.put("/:id", updateStudent); // Update a student by ID
 router.delete("/:id", deleteStudent); // Delete a student by ID
 router.get("/profile", auth, getStudentProfile);      // ✅ /api/students/profile
-
+router.get('/:id', studentController.getStudentById);
 // router.get("/profile", auth, async (req, res) => {
 //     try {
 //       // Find student using the user ID or email from the token
